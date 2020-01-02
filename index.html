@@ -6,12 +6,62 @@
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="colors.js"></script>
+  <script>
+    var callback = function(response) {
+      console.log(response);
+      if (response.status === 'connected') {
+        document.querySelector('#cbtn').value = 'Logout';
+      } else {
+        document.querySelector('#cbtn').value = 'Login';
+      }
+      //        statusChangeCallback(response); // Returns the login status.
+    }
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '455463088484418',
+        cookie: true, // Enable cookies to allow the server to access the session.
+        xfbml: true, // Parse social plugins on this webpage.
+        version: 'v5.0' // Use this Graph API version for this call.
+      });
+
+      FB.getLoginStatus(callback);
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
 </head>
 
 <body>
   <h1><a href="#!WEB" onclick="
     fetchPage('Web')
     ">WEB</a></h1>
+
+  <input type="button" id="cbtn" value="checking..." onclick="
+  if(this.value === 'Login'){
+    //now Logout
+    FB.login(function(response){
+      // handle the response
+      console.log(response);
+      callback(response);
+    });
+  }else{
+    //now Login
+    FB.logout(function(response){
+      // handle the response
+      console.log(response);
+      callback(response);
+    });
+  }
+  ">
+
   <input id="night_day" type="button" value="night" onclick="
     nightDayHandler(this);
   ">
