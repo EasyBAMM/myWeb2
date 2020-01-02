@@ -4,15 +4,28 @@
 <head>
   <title>WEB1 - Welcome</title>
   <meta charset="utf-8">
+  //ajax
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="colors.js"></script>
+  //google
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="582350034558-ddeqi4d955dqtqf4j5vkto4kbgq2tufu.apps.googleusercontent.com">
+  <script>
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    }
+  </script>
+  //facebook
   <script>
     var callback = function(response) {
       console.log(response);
       if (response.status === 'connected') {
         document.querySelector('#cbtn').value = 'Logout';
-        FB.api('/me',function(response){
-          document.querySelector('#userName').innerHTML = "이름 : "+ response.name;
+        FB.api('/me', function(response) {
+          document.querySelector('#userName').innerHTML = "이름 : " + response.name;
         })
       } else {
         document.querySelector('#cbtn').value = 'Login';
@@ -30,7 +43,6 @@
 
       FB.getLoginStatus(callback);
     };
-
     // Load the SDK asynchronously
     (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -41,6 +53,7 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   </script>
+  <script src="colors.js"></script>
 </head>
 
 <body>
@@ -48,6 +61,10 @@
     fetchPage('Web')
     ">WEB</a></h1>
 
+  //구글 버튼
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+  //페이스북 버튼
   <input type="button" id="cbtn" value="checking..." onclick="
   if(this.value === 'Login'){
     //now Logout
