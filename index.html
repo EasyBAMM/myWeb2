@@ -11,8 +11,12 @@
       console.log(response);
       if (response.status === 'connected') {
         document.querySelector('#cbtn').value = 'Logout';
+        FB.api('/me',function(response){
+          document.querySelector('#userName').innerHTML = response.name;
+        })
       } else {
         document.querySelector('#cbtn').value = 'Login';
+        document.querySelector('#userName').innerHTML = "";
       }
       //        statusChangeCallback(response); // Returns the login status.
     }
@@ -65,6 +69,11 @@
   <input id="night_day" type="button" value="night" onclick="
     nightDayHandler(this);
   ">
+
+  <div id="userName">
+
+  </div>
+
   <ol id="nav">
 
   </ol>
