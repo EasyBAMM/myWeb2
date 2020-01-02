@@ -12,7 +12,7 @@
       if (response.status === 'connected') {
         document.querySelector('#cbtn').value = 'Logout';
         FB.api('/me',function(response){
-          document.querySelector('#userName').innerHTML = response.name;
+          document.querySelector('#userName').innerHTML = "이름 : "+ response.name;
         })
       } else {
         document.querySelector('#cbtn').value = 'Login';
